@@ -3,8 +3,8 @@ const cors = require('cors')
 const path = require('path');
 const serverless = require('serverless-http');
 require('dotenv').config()
-const { upload } = require('./middlewares/uploadFiles')
-const connectDB = require('./configs/db');
+const { upload } = require('../middlewares/uploadFiles')
+const connectDB = require('../configs/db');
 
 const app = express();
 
@@ -12,7 +12,7 @@ const app = express();
 connectDB();
 
 
-const authenticateToken = require('./middlewares/auth');
+const authenticateToken = require('../middlewares/auth');
 
 
 // Middleware
@@ -21,8 +21,8 @@ app.use(express.json());
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-const authRouter = require('./routes/auth.route')
-const vehicleRouter = require('./routes/vehicle.route')
+const authRouter = require('../routes/auth.route')
+const vehicleRouter = require('../routes/vehicle.route')
 
 app.use("/auth", authRouter);
 // Apply the authentication middleware to all routes under /vehicle
