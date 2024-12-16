@@ -35,7 +35,6 @@ const create = async (req, res) => {
             message: 'Email and password required'
         });
     }
-   
 
     try {
         const newUser = new User({

@@ -18,8 +18,8 @@ const add = async (req, res) => {
         const { car_model, price, phone_number } = req.body
         const images = req.files.map(file => {
             return {
-                image_url: process.env.SERVER_URL + "/" + file.path,
-                image_name: file.filename
+                image_url: file.path,
+                image_name: file.originalname
             }
         })
 
