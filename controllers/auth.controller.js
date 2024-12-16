@@ -35,12 +35,13 @@ const create = async (req, res) => {
             message: 'Email and password required'
         });
     }
-    const newUser = new User({
-        email: email,
-        password: password
-    });
+   
 
     try {
+        const newUser = new User({
+            email: email,
+            password: password
+        });
         await newUser.save();
 
         return res.status(201).json({
@@ -49,6 +50,10 @@ const create = async (req, res) => {
         });
     } catch (error) {
         console.error('Error registering user:', error);
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        });
     }
 }
 

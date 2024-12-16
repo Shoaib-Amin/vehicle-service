@@ -23,15 +23,15 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const authRouter = require('../routes/auth.route')
 const vehicleRouter = require('../routes/vehicle.route')
 
-// Test route
-app.get('/', (req, res) => {
-    res.send('Hello from Express app!');
-});
+
 
 app.use("/auth", authRouter);
 // Apply the authentication middleware to all routes under /vehicle
 app.use("/vehicle", authenticateToken, upload.array('images', 10), vehicleRouter);
-
+// Test route
+app.get('/', (req, res) => {
+    res.send('Hello from Express app!');
+});
 
 
 // Export the app to be used by Vercel
