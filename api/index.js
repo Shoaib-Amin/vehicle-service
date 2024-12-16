@@ -18,7 +18,7 @@ const authenticateToken = require('../middlewares/auth');
 app.use(cors());
 app.use(express.json());
 // Serve static files from the 'uploads' directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 const authRouter = require('../routes/auth.route')
 const vehicleRouter = require('../routes/vehicle.route')
