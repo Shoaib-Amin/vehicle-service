@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator');
 const Vehicle = require("../models/Vehicle")
 
 const add = async (req, res) => {
-
     const errors = validationResult(req);
 
     if (req.files.length > 10) {
@@ -28,7 +27,8 @@ const add = async (req, res) => {
             car_model: car_model,
             price: price,
             phone_number: phone_number,
-            images: images
+            images: images,
+            createdBy: req.user.id
         });
 
        await newVehicle.save()

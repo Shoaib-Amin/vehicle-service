@@ -36,6 +36,11 @@ const vehicleSchema = new mongoose.Schema({
             message: 'images must not contain more than 5 elements'
         },
         _id: false
+    },
+    createdBy: {
+        type: mongoose.Schema.Types.ObjectId,  // ObjectId for user reference
+        ref: 'User',  // Reference to the User model
+        required: true  // This ensures that every vehicle is created by a user
     }
 });
 
