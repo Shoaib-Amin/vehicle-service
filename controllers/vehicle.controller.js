@@ -31,12 +31,13 @@ const add = async (req, res) => {
             createdBy: req.user.id
         });
 
-       await newVehicle.save()
+        await newVehicle.save()
         return res.status(201).json({
             success: true,
             error: 'New Vehicle created successfully'
         });
     } catch (error) {
+        console.error('Error while saving vehicle', error.message)
         return res.status(500).json({
             success: false,
             error: error.message
@@ -44,6 +45,46 @@ const add = async (req, res) => {
     }
 }
 
+const getAll = async (req, res) => {
+    try {
+        // Get the page and limit from query params, with default values
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+
+        // Calculate the skip value
+        const skip = (page - 1) * limit;
+
+        // Fetch data with pagination
+        const data = await Vehicle.find({ createdBy: req.user.id })
+            .skip(skip)
+            .limit(limit);
+
+        // Count total records for pagination metadata
+        const totalRecords = await Vehicle.countDocuments({ createdBy: req.user.id });
+
+        // Calculate total pages
+        const totalPages = Math.ceil(totalRecords / limit);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Data fetched successfully',
+            data,
+            pagination: {
+                totalRecords,
+                totalPages,
+                currentPage: page,
+                limit,
+            }
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
+
 module.exports = {
-    add
+    add,
+    getAll
 }
