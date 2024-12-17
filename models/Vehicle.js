@@ -19,7 +19,7 @@ const vehicleSchema = new mongoose.Schema({
     phone_number: {
         type: String,
         required: [true, 'phone_number is required'],
-        match: [/^\d{11}$/, 'phone_number must be exactly 11 digits']
+        match: [/^\d{10}$/, 'phone_number must be exactly 11 digits']
     },
     images: {
         type: [{

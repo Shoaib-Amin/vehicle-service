@@ -7,7 +7,7 @@ const add = async (req, res) => {
     if (req.files.length > 10) {
         return res.status(400).json({
             success: false,
-            error: 'You can only upload up to 10 images'
+            message: 'You can only upload up to 10 images'
         });
     }
     if (!errors.isEmpty()) {
@@ -34,13 +34,13 @@ const add = async (req, res) => {
         await newVehicle.save()
         return res.status(201).json({
             success: true,
-            error: 'New Vehicle created successfully'
+            message: 'New Vehicle created successfully'
         });
     } catch (error) {
         console.error('Error while saving vehicle', error.message)
         return res.status(500).json({
             success: false,
-            error: error.message
+            message: error.message
         });
     }
 }
@@ -84,7 +84,32 @@ const getAll = async (req, res) => {
     }
 }
 
+const deletById = async (req, res) => {
+    const { id } = req.params; // Extract the id from URL parameters
+
+    try {
+        // Attempt to delete the record from the database
+        const result = await Vehicle.findByIdAndDelete(id);
+
+        if (!result) {
+            // If no record was found, return an error response
+            return res.status(404).json({
+                success: false,
+                message: 'Record not found'
+            });
+        }
+
+        // If successful, return a success response
+        return res.status(200).json({ success: true, message: 'Record deleted successfully' });
+    } catch (error) {
+        // Handle any errors that occur
+        console.error(error);
+        return res.status(500).json({ success: false, message: 'Server error', error });
+    }
+}
+
 module.exports = {
     add,
-    getAll
+    getAll,
+    deletById
 }
