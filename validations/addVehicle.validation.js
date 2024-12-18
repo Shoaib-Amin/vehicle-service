@@ -18,7 +18,7 @@ const add_vehicle_validation = [
     body('phone_number')
         .notEmpty()
         .withMessage('phone_number is required')
-        .matches(/^\d{10}$/)
+        .matches(/^\d{11}$/)
         .withMessage('phone_number must be exactly 11 digits')
 ]
 
